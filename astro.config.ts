@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config'
+import { defineConfig, passthroughImageService } from 'astro/config'
 
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
@@ -18,7 +18,12 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
 
+import keystatic from '@keystatic/astro'
+
 export default defineConfig({
+  image: {
+    service: passthroughImageService(), // Deployment to Cloudflare requires enabling
+  },
   site: 'https://astro-erudite.vercel.app',
   integrations: [
     expressiveCode({
@@ -40,8 +45,7 @@ export default defineConfig({
         codeFontSize: '0.75rem',
         borderColor: 'var(--border)',
         codeFontFamily: 'var(--font-mono)',
-        codeBackground:
-          'color-mix(in oklab, var(--muted) 25%, transparent)',
+        codeBackground: 'color-mix(in oklab, var(--muted) 25%, transparent)',
         frames: {
           editorActiveTabForeground: 'var(--muted-foreground)',
           editorActiveTabBackground:
@@ -64,10 +68,11 @@ export default defineConfig({
         uiFontFamily: 'var(--font-sans)',
       },
     }),
-    mdx(),
     react(),
+    mdx(),
     sitemap(),
     icon(),
+    keystatic(),
   ],
   vite: {
     plugins: [tailwindcss()],
