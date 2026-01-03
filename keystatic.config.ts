@@ -2,7 +2,7 @@ import { config, fields, collection, component } from '@keystatic/core'
 import pinyin from 'tiny-pinyin'
 
 export default config({
-  locale: 'zh-CN',
+  locale: 'en-US',
   storage: import.meta.env.PROD
     ? {
         kind: 'github',
